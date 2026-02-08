@@ -1,7 +1,8 @@
 <header class="topbar">
   <div class="topbar__inner">
     <!-- Left: brand always -->
-    <a class="brand" routerLink="/">🏥 HÔPITAL</a>
+    <a class="brand" (click)="goHome()">🏥 HOSPITAL</a>
+
 
     <!-- Center: only on home -->
     <div class="centerText" *ngIf="isHome">

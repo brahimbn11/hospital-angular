@@ -1,6 +1,7 @@
 import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Navbar } from './layout/navbar/navbar';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-root',
@@ -10,5 +11,7 @@ import { Navbar } from './layout/navbar/navbar';
   styleUrl: './app.scss',
 })
 export class App {
-  protected readonly title = 'ANGULAR';
+   constructor(private title: Title) {
+    this.title.setTitle('Système de Gestion Hospitalière');
+   }
 }

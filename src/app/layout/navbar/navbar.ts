@@ -28,4 +28,14 @@ export class Navbar {
     this.auth.logout();
     this.router.navigate(['/login']);
   }
+  goHome() {
+  if (this.auth.isLoggedIn()) {
+    // déjà connecté → dashboard
+    this.router.navigate(['/dashboard']);
+  } else {
+    // pas connecté → home
+    this.router.navigate(['/']);
+  }
+}
+
 }
