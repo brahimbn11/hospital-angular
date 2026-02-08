@@ -1,7 +1,18 @@
 <div class="page">
   <div class="card card--wide">
-    <h2>Patients</h2>
 
+    <!-- ✅ Header toujours visible -->
+    <div class="header">
+      <div>
+        <h2>Patients</h2>
+        <p class="subtitle">Gestion des patients (ajout, modification, suppression).</p>
+      </div>
+
+      <!-- ✅ Toujours visible même si 0 patient -->
+      <a routerLink="/patients/new" class="btn btn-add">+ Ajouter</a>
+    </div>
+
+    <!-- ✅ Search toujours visible -->
     <input
       class="search"
       placeholder="Rechercher par nom / CIN / téléphone..."
@@ -9,7 +20,8 @@
       (ngModelChange)="refresh()"
     />
 
-    <table class="table" *ngIf="patients.length; else empty">
+    <!-- Table seulement si patients existent -->
+    <table class="table" *ngIf="patients.length > 0; else empty">
       <thead>
         <tr>
           <th>Nom complet</th>
@@ -17,7 +29,7 @@
           <th>Téléphone</th>
           <th>Date naissance</th>
           <th>Adresse</th>
-          <th>Actions</th>
+          <th class="th-actions">Actions</th>
         </tr>
       </thead>
 
@@ -30,9 +42,7 @@
           <td>{{ p.address }}</td>
 
           <td class="row-actions">
-            <a class="link" [routerLink]="['/patients', p.id, 'edit']">
-              Modifier
-            </a>
+            <a class="link" [routerLink]="['/patients', p.id, 'edit']">Modifier</a>
 
             <!-- Bouton supprimer -->
             <button
@@ -54,8 +64,12 @@
       </tbody>
     </table>
 
+    <!-- ✅ Empty state, mais le bouton Ajouter reste visible en haut -->
     <ng-template #empty>
-      <p class="message">Aucun patient trouvé.</p>
+      <div class="empty">
+        <p class="message">Aucun patient trouvé.</p>
+        <p class="hint">Cliquez sur <strong>“Ajouter”</strong> pour créer le premier patient.</p>
+      </div>
     </ng-template>
   </div>
 </div>

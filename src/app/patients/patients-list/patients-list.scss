@@ -237,3 +237,33 @@
 .btn-ghost:hover {
   background: rgba(255, 255, 255, 0.22);
 }
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+.th-actions {
+  text-align: right;
+  width: 210px;
+}
+
+.empty {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.hint {
+  margin-top: 6px;
+  opacity: 0.85;
+  font-weight: 700;
+}
