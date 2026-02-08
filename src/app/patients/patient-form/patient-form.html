@@ -1,0 +1,16 @@
+<h2>{{ id ? 'Edit patient' : 'Add patient' }}</h2>
+
+<form (ngSubmit)="save()" #f="ngForm" class="form">
+  <input [(ngModel)]="model.fullName" name="fullName" placeholder="Full name" required />
+  <input [(ngModel)]="model.cin" name="cin" placeholder="CIN / ID" required />
+  <input [(ngModel)]="model.phone" name="phone" placeholder="Phone" required />
+  <input [(ngModel)]="model.birthDate" name="birthDate" type="date" placeholder="Birth date" />
+  <input [(ngModel)]="model.address" name="address" placeholder="Address" />
+
+  <div class="buttons">
+    <button type="submit" [disabled]="f.invalid">Save</button>
+    <a routerLink="/patients">Cancel</a>
+  </div>
+</form>
+
+<p>{{ message }}</p>

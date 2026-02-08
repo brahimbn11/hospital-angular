@@ -1,0 +1,14 @@
+<nav>
+  <!-- Only show when logged in -->
+  <ng-container *ngIf="auth.isLoggedIn(); else loggedOut">
+    <a routerLink="patients">Patients</a>
+    <button (click)="logout()">Logout</button>
+  </ng-container>
+
+  <!-- Only show when logged out -->
+  <ng-template #loggedOut>
+    <a routerLink="login">Login</a>
+    <a routerLink="signup">Sign up</a>
+  </ng-template>
+</nav>
+

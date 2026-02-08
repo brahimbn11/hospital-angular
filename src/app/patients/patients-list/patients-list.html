@@ -1,0 +1,44 @@
+<div class="header">
+  <h2>Patients</h2>
+  <a routerLink="/patients/new" class="btn">+ Add patient</a>
+</div>
+
+<input
+  class="search"
+  placeholder="Search by name / CIN / phone..."
+  [(ngModel)]="query"
+  (ngModelChange)="refresh()"
+/>
+
+
+
+<table class="table" *ngIf="patients.length; else empty">
+  <thead>
+    <tr>
+      <th>Full name</th>
+      <th>CIN</th>
+      <th>Phone</th>
+      <th>Birth date</th>
+      <th>Address</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <tr *ngFor="let p of patients">
+      <td>{{ p.fullName }}</td>
+      <td>{{ p.cin }}</td>
+      <td>{{ p.phone }}</td>
+      <td>{{ p.birthDate }}</td>
+      <td>{{ p.address }}</td>
+      <td class="actions">
+        <a [routerLink]="['/patients', p.id, 'edit']">Edit</a>
+        <button (click)="remove(p.id)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<ng-template #empty>
+  <p>No patients found.</p>
+</ng-template>

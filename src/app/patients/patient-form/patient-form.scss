@@ -1,0 +1,20 @@
+.form {
+  display: grid;
+  gap: 10px;
+  max-width: 420px;
+
+  input, button, a {
+    padding: 10px;
+  }
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+
+  a {
+    text-decoration: none;
+    border: 1px solid #333;
+  }
+}

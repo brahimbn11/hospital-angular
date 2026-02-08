@@ -1,0 +1,23 @@
+<h2>Login</h2>
+
+<form (ngSubmit)="submit()" #f="ngForm" class="form">
+  <input
+    type="text"
+    name="username"
+    [(ngModel)]="username"
+    placeholder="Username"
+    required
+  />
+
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="password"
+    placeholder="Password"
+    required
+  />
+
+  <button type="submit" [disabled]="f.invalid">Login</button>
+</form>
+
+<p>{{ message }}</p>

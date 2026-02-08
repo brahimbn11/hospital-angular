@@ -1,0 +1,48 @@
+<h2>Create account</h2>
+
+<form (ngSubmit)="submit()" #f="ngForm" class="form">
+  <input
+    type="text"
+    name="fullName"
+    [(ngModel)]="user.fullName"
+    placeholder="Full name"
+    required
+  />
+
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="user.email"
+    placeholder="Email"
+    required
+  />
+
+  <input
+    type="text"
+    name="phone"
+    [(ngModel)]="user.phone"
+    placeholder="Phone"
+    required
+  />
+
+  <input
+    type="text"
+    name="username"
+    [(ngModel)]="user.username"
+    placeholder="Username"
+    required
+  />
+
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="user.password"
+    placeholder="Password"
+    required
+    minlength="4"
+  />
+
+  <button type="submit" [disabled]="f.invalid">Sign up</button>
+</form>
+
+<p class="msg">{{ message }}</p>

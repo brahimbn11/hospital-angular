@@ -1,0 +1,41 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.search {
+  padding: 10px;
+  width: 100%;
+  max-width: 520px;
+  margin-bottom: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th, td {
+    border-bottom: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+  }
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  button {
+    padding: 6px 10px;
+    cursor: pointer;
+  }
+}
+
+.btn {
+  padding: 8px 12px;
+  border: 1px solid #333;
+  text-decoration: none;
+}
