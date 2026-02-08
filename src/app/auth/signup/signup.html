@@ -1,48 +1,149 @@
-<h2>Create account</h2>
+<div class="page">
+  <a class="back" routerLink="/">←</a>
 
-<form (ngSubmit)="submit()" #f="ngForm" class="form">
-  <input
-    type="text"
-    name="fullName"
-    [(ngModel)]="user.fullName"
-    placeholder="Full name"
-    required
-  />
+  <form class="card" (ngSubmit)="submit()" #f="ngForm" novalidate>
+    <h2>Nouvel employé</h2>
 
-  <input
-    type="email"
-    name="email"
-    [(ngModel)]="user.email"
-    placeholder="Email"
-    required
-  />
+    <!-- Identité -->
+    <div class="section">
+      <h3>Identité :</h3>
 
-  <input
-    type="text"
-    name="phone"
-    [(ngModel)]="user.phone"
-    placeholder="Phone"
-    required
-  />
+      <div class="field">
+        <input
+          name="fullName"
+          [(ngModel)]="user.fullName"
+          placeholder="Nom complet"
+          required
+          minlength="3"
+          #fullName="ngModel"
+        />
+      </div>
 
-  <input
-    type="text"
-    name="username"
-    [(ngModel)]="user.username"
-    placeholder="Username"
-    required
-  />
+      <div class="field">
+        <input
+          type="email"
+          name="email"
+          [(ngModel)]="user.email"
+          placeholder="Email@com"
+          required
+          email
+          #emailCtrl="ngModel"
+        />
+      </div>
 
-  <input
-    type="password"
-    name="password"
-    [(ngModel)]="user.password"
-    placeholder="Password"
-    required
-    minlength="4"
-  />
+      <div class="field">
+        <input
+          name="phone"
+          [(ngModel)]="user.phone"
+          placeholder="phone (chiffres seulement)"
+          required
+          inputmode="numeric"
+          pattern="^[0-9]{10}$"
+          maxlength="10"
+          #phoneCtrl="ngModel"
+        />
+      </div>
 
-  <button type="submit" [disabled]="f.invalid">Sign up</button>
-</form>
+      <div class="field">
+        <select
+          name="gender"
+          [(ngModel)]="user.gender"
+          required
+          #genderCtrl="ngModel"
+        >
+          <option value="" disabled selected>Selectionnez un Sexe</option>
+          <option value="male">Homme</option>
+          <option value="female">Femme</option>
+        </select>
+      </div>
 
-<p class="msg">{{ message }}</p>
+      <div class="divider"></div>
+    </div>
+
+    <!-- Adresse -->
+    <div class="section">
+      <h3>Adresse :</h3>
+
+      <div class="field">
+        <input
+          name="street"
+          [(ngModel)]="user.street"
+          placeholder="Rue"
+          required
+          #streetCtrl="ngModel"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          name="city"
+          [(ngModel)]="user.city"
+          placeholder="Ville"
+          required
+          #cityCtrl="ngModel"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          name="country"
+          [(ngModel)]="user.country"
+          placeholder="Pays"
+          required
+          #countryCtrl="ngModel"
+        />
+      </div>
+
+      <div class="divider"></div>
+    </div>
+
+    <!-- Compte -->
+    <div class="section">
+      <h3>Compte :</h3>
+
+      <div class="field">
+        <input
+          name="username"
+          [(ngModel)]="user.username"
+          placeholder="Username"
+          required
+          minlength="3"
+          #usernameCtrl="ngModel"
+        />
+      </div>
+
+      <div class="field">
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="user.password"
+          placeholder="Password (min 6)"
+          required
+          minlength="6"
+          #passwordCtrl="ngModel"
+        />
+      </div>
+    </div>
+
+    <!-- Messages d'erreur (simples) -->
+    <div class="errors" *ngIf="f.submitted && f.invalid">
+      <p *ngIf="emailCtrl?.invalid">Email invalide.</p>
+      <p *ngIf="phoneCtrl?.invalid">Téléphone invalide (10 chiffres).</p>
+      <p *ngIf="genderCtrl?.invalid">Veuillez choisir un sexe.</p>
+      <p *ngIf="fullName?.invalid">Nom complet obligatoire (min 3).</p>
+      <p *ngIf="streetCtrl?.invalid">Rue obligatoire.</p>
+      <p *ngIf="cityCtrl?.invalid">Ville obligatoire.</p>
+      <p *ngIf="countryCtrl?.invalid">Pays obligatoire.</p>
+      <p *ngIf="usernameCtrl?.invalid">Username obligatoire (min 3).</p>
+      <p *ngIf="passwordCtrl?.invalid">Password obligatoire (min 6).</p>
+    </div>
+
+    <div class="actions">
+      <button class="btn" type="submit" [disabled]="f.invalid">
+        Soumettre
+      </button>
+    </div>
+
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </form>
+</div>

@@ -1,24 +1,32 @@
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Auth, ClientUser } from '../auth';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { Auth, ClientUser } from '../auth';
+
 
 @Component({
   selector: 'app-signup',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './signup.html',
   styleUrl: './signup.scss',
 })
 export class Signup {
   user: ClientUser = {
-    fullName: '',
-    email: '',
-    phone: '',
-    username: '',
-    password: '',
-  };
+  fullName: '',
+  email: '',
+  phone: '',
+  gender: '',
+  street: '',
+  city: '',
+  country: '',
+  username: '',
+  password: '',
+};
+
+
+
 
   message = '';
 
@@ -28,8 +36,6 @@ export class Signup {
     const res = this.auth.signup(this.user);
     this.message = res.message;
 
-    if (res.ok) {
-      this.router.navigate(['/login']);
-    }
+    if (res.ok) this.router.navigate(['/login']);
   }
 }

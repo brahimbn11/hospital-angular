@@ -1,23 +1,32 @@
-<h2>Login</h2>
+<div class="page">
+  <form class="card" (ngSubmit)="submit()" #f="ngForm">
+    <h2>Login</h2>
 
-<form (ngSubmit)="submit()" #f="ngForm" class="form">
-  <input
-    type="text"
-    name="username"
-    [(ngModel)]="username"
-    placeholder="Username"
-    required
-  />
+    <div class="field">
+      <input
+        name="username"
+        [(ngModel)]="username"
+        placeholder="Username"
+        required
+      />
+    </div>
 
-  <input
-    type="password"
-    name="password"
-    [(ngModel)]="password"
-    placeholder="Password"
-    required
-  />
+    <div class="field">
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="password"
+        placeholder="Password"
+        required
+      />
+    </div>
 
-  <button type="submit" [disabled]="f.invalid">Login</button>
-</form>
+    <div class="actions">
+      <button class="btn" type="submit" [disabled]="f.invalid">
+        Se connecter
+      </button>
+    </div>
 
-<p>{{ message }}</p>
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </form>
+</div>

@@ -4,6 +4,10 @@ export interface ClientUser {
   fullName: string;
   email: string;
   phone: string;
+  gender: 'male' | 'female' | 'other' | '';
+  street: string;
+  city: string;
+  country: string;
   username: string;
   password: string;
 }

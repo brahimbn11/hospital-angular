@@ -1,14 +1,30 @@
-<nav>
-  <!-- Only show when logged in -->
-  <ng-container *ngIf="auth.isLoggedIn(); else loggedOut">
-    <a routerLink="patients">Patients</a>
-    <button (click)="logout()">Logout</button>
-  </ng-container>
+<header class="topbar">
+  <div class="topbar__inner">
+    <!-- Left: brand always -->
+    <a class="brand" routerLink="/">🏥 HÔPITAL</a>
 
-  <!-- Only show when logged out -->
-  <ng-template #loggedOut>
-    <a routerLink="login">Login</a>
-    <a routerLink="signup">Sign up</a>
-  </ng-template>
-</nav>
+    <!-- Center: only on home -->
+    <div class="centerText" *ngIf="isHome">
+      Plateforme sécurisée de gestion des établissements de santé
+    </div>
 
+    <!-- Right: ONLY if NOT home -->
+    <ng-container *ngIf="!isHome">
+      <!-- Logged out -->
+      <ng-container *ngIf="!auth.isLoggedIn(); else loggedIn">
+        <nav class="links">
+          <a routerLink="/login" routerLinkActive="active">Se connecter</a>
+          <a routerLink="/signup" routerLinkActive="active" class="btn-link">S'inscrire</a>
+        </nav>
+      </ng-container>
+
+      <!-- Logged in -->
+      <ng-template #loggedIn>
+        <nav class="links">
+          <a routerLink="/patients" routerLinkActive="active">Patients</a>
+          <button class="logout" (click)="logout()">Logout</button>
+        </nav>
+      </ng-template>
+    </ng-container>
+  </div>
+</header>

@@ -1,44 +1,61 @@
-<div class="header">
-  <h2>Patients</h2>
-  <a routerLink="/patients/new" class="btn">+ Add patient</a>
+<div class="page">
+  <div class="card card--wide">
+    <h2>Patients</h2>
+
+    <input
+      class="search"
+      placeholder="Rechercher par nom / CIN / téléphone..."
+      [(ngModel)]="query"
+      (ngModelChange)="refresh()"
+    />
+
+    <table class="table" *ngIf="patients.length; else empty">
+      <thead>
+        <tr>
+          <th>Nom complet</th>
+          <th>CIN</th>
+          <th>Téléphone</th>
+          <th>Date naissance</th>
+          <th>Adresse</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let p of patients">
+          <td>{{ p.fullName }}</td>
+          <td>{{ p.cin }}</td>
+          <td>{{ p.phone }}</td>
+          <td>{{ p.birthDate }}</td>
+          <td>{{ p.address }}</td>
+
+          <td class="row-actions">
+            <a class="link" [routerLink]="['/patients', p.id, 'edit']">
+              Modifier
+            </a>
+
+            <!-- Bouton supprimer -->
+            <button
+              class="btn btn-danger"
+              *ngIf="pendingDeleteId !== p.id"
+              (click)="askDelete(p.id)"
+            >
+              Supprimer
+            </button>
+
+            <!-- Confirmation -->
+            <div class="confirm" *ngIf="pendingDeleteId === p.id">
+              <span>Confirmer ?</span>
+              <button class="btn btn-danger" (click)="confirmDelete()">Oui</button>
+              <button class="btn btn-ghost" (click)="cancelDelete()">Non</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #empty>
+      <p class="message">Aucun patient trouvé.</p>
+    </ng-template>
+  </div>
 </div>
-
-<input
-  class="search"
-  placeholder="Search by name / CIN / phone..."
-  [(ngModel)]="query"
-  (ngModelChange)="refresh()"
-/>
-
-
-
-<table class="table" *ngIf="patients.length; else empty">
-  <thead>
-    <tr>
-      <th>Full name</th>
-      <th>CIN</th>
-      <th>Phone</th>
-      <th>Birth date</th>
-      <th>Address</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <tr *ngFor="let p of patients">
-      <td>{{ p.fullName }}</td>
-      <td>{{ p.cin }}</td>
-      <td>{{ p.phone }}</td>
-      <td>{{ p.birthDate }}</td>
-      <td>{{ p.address }}</td>
-      <td class="actions">
-        <a [routerLink]="['/patients', p.id, 'edit']">Edit</a>
-        <button (click)="remove(p.id)">Delete</button>
-      </td>
-    </tr>
-  </tbody>
-</table>
-
-<ng-template #empty>
-  <p>No patients found.</p>
-</ng-template>

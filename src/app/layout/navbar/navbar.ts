@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, Router } from '@angular/router';
-import { Auth } from '../../auth/auth';
+import { Router, RouterLink, RouterLinkActive, NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs/operators';
+import { Auth } from '../../auth/auth'; // adapte le chemin si besoin
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,17 @@ import { Auth } from '../../auth/auth';
   styleUrl: './navbar.scss',
 })
 export class Navbar {
-  constructor(public auth: Auth, private router: Router) {}
+  isHome = false;
+
+  constructor(public auth: Auth, private router: Router) {
+    this.isHome = this.router.url === '/' || this.router.url === '';
+
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe(() => {
+        this.isHome = this.router.url === '/' || this.router.url === '';
+      });
+  }
 
   logout() {
     this.auth.logout();

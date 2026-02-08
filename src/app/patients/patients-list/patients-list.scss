@@ -1,41 +1,239 @@
+/* Carte large */
+.card--wide {
+  max-width: 1100px;
+}
+
+/* Header */
 .header {
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 900;
+}
+
+.subtitle {
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.85;
+}
+
+/* Toolbar */
+.toolbar {
+  display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.searchBox {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 10px;
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.searchIcon {
+  opacity: 0.9;
 }
 
 .search {
-  padding: 10px;
   width: 100%;
-  max-width: 520px;
-  margin-bottom: 12px;
+  height: 30px;
+  border: none;
+  outline: none;
+  background: transparent;
+  color: #fff;
+  font-weight: 800;
 }
 
+.search::placeholder {
+  color: rgba(255, 255, 255, 0.72);
+  font-weight: 700;
+}
+
+.count {
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: 900;
+  opacity: 0.85;
+}
+
+/* Table wrapper */
+.tableWrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+/* Table */
 .table {
   width: 100%;
   border-collapse: collapse;
-
-  th, td {
-    border-bottom: 1px solid #ddd;
-    padding: 10px;
-    text-align: left;
-  }
 }
 
-.actions {
+.table th,
+.table td {
+  padding: 12px 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+  vertical-align: middle;
+}
+
+.table thead th {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.35px;
+  opacity: 0.9;
+  background: rgba(0, 0, 0, 0.10);
+}
+
+.table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.name {
+  font-weight: 900;
+}
+
+.addr {
+  max-width: 280px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Chips (CIN) */
+.chip {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 900;
+
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+/* Actions */
+.th-actions {
+  text-align: right;
+  width: 200px;
+}
+
+.row-actions {
   display: flex;
-  gap: 8px;
+  justify-content: flex-end;
   align-items: center;
-
-  button {
-    padding: 6px 10px;
-    cursor: pointer;
-  }
+  gap: 10px;
 }
 
+/* Link edit */
+.link {
+  font-weight: 900;
+  opacity: 0.95;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
 .btn {
+  border: none;
+  border-radius: 10px;
   padding: 8px 12px;
-  border: 1px solid #333;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.btn-add {
+  background: rgba(29, 78, 216, 0.95);
+  color: white;
   text-decoration: none;
+}
+
+.btn-add:hover {
+  background: rgba(30, 64, 175, 0.98);
+}
+
+.btn-danger {
+  background: rgba(220, 38, 38, 0.95);
+  color: white;
+}
+
+.btn-danger:hover {
+  background: rgba(185, 28, 28, 1);
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 26px 10px;
+}
+
+.emptyIcon {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+
+.emptyTitle {
+  font-weight: 1000;
+  margin-bottom: 4px;
+}
+
+.emptyText {
+  opacity: 0.85;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .subtitle, .count, .addr {
+    display: none;
+  }
+  .th-actions { width: 160px; }
+}
+
+@media (max-width: 560px) {
+  .toolbar { flex-direction: column; align-items: stretch; }
+  .row-actions { flex-direction: column; align-items: stretch; }
+}
+/* Zone de confirmation suppression */
+.confirm {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.confirm span {
+  font-size: 12px;
+  font-weight: 800;
+  opacity: 0.9;
+}
+
+/* Bouton fantôme (annuler) */
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.22);
 }

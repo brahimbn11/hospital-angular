@@ -4,10 +4,14 @@ export interface Patient {
   id: string;         // unique id
   fullName: string;
   cin: string;
+  gender: string;
   phone: string;
   birthDate: string;  // "YYYY-MM-DD"
   address: string;
   createdAt: number;
+  city: string;
+  country: string;
+
 }
 
 @Injectable({ providedIn: 'root' })

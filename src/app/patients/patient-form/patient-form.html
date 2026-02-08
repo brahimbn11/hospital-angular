@@ -1,16 +1,117 @@
-<h2>{{ id ? 'Edit patient' : 'Add patient' }}</h2>
+<div class="page">
+  <div class="card card--wide">
+    <h2>{{ isEdit ? 'Modifier le patient' : 'Ajouter un patient' }}</h2>
+    <p class="subtitle">
+      Renseignez les informations personnelles et administratives du patient.
+    </p>
 
-<form (ngSubmit)="save()" #f="ngForm" class="form">
-  <input [(ngModel)]="model.fullName" name="fullName" placeholder="Full name" required />
-  <input [(ngModel)]="model.cin" name="cin" placeholder="CIN / ID" required />
-  <input [(ngModel)]="model.phone" name="phone" placeholder="Phone" required />
-  <input [(ngModel)]="model.birthDate" name="birthDate" type="date" placeholder="Birth date" />
-  <input [(ngModel)]="model.address" name="address" placeholder="Address" />
+    <form (ngSubmit)="save()" #f="ngForm" novalidate>
 
-  <div class="buttons">
-    <button type="submit" [disabled]="f.invalid">Save</button>
-    <a routerLink="/patients">Cancel</a>
+      <!-- Identité -->
+      <div class="section">
+        <h3>Identité</h3>
+
+        <div class="grid">
+          <div class="field">
+            <label>Nom complet</label>
+            <input
+              name="fullName"
+              [(ngModel)]="model.fullName"
+              required
+              minlength="3"
+            />
+          </div>
+
+          <div class="field">
+            <label>CIN</label>
+            <input
+              name="cin"
+              [(ngModel)]="model.cin"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label>Sexe</label>
+            <select
+              name="gender"
+              [(ngModel)]="model.gender"
+              required
+            >
+              <option value="" disabled>Choisir</option>
+              <option value="Homme">Homme</option>
+              <option value="Femme">Femme</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label>Date de naissance</label>
+            <input
+              type="date"
+              name="birthDate"
+              [(ngModel)]="model.birthDate"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- Contact -->
+      <div class="section">
+        <h3>Contact</h3>
+
+        <div class="grid">
+          <div class="field">
+            <label>Téléphone</label>
+            <input
+              name="phone"
+              [(ngModel)]="model.phone"
+              required
+              pattern="^[0-9]+$"
+              placeholder="Chiffres uniquement"
+            />
+          </div>
+
+          <div class="field">
+            <label>Adresse</label>
+            <input
+              name="address"
+              [(ngModel)]="model.address"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label>Ville</label>
+            <input
+              name="city"
+              [(ngModel)]="model.city"
+              required
+            />
+          </div>
+
+          <div class="field">
+            <label>Pays</label>
+            <input
+              name="country"
+              [(ngModel)]="model.country"
+              required
+            />
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-add" type="submit" [disabled]="f.invalid">
+          {{ isEdit ? 'Mettre à jour' : 'Enregistrer' }}
+        </button>
+
+        <a class="btn btn-ghost" routerLink="/patients">
+          Annuler
+        </a>
+      </div>
+    </form>
   </div>
-</form>
-
-<p>{{ message }}</p>
+</div>

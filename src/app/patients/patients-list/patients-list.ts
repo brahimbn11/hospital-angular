@@ -15,6 +15,9 @@ export class PatientsList {
   query = '';
   patients: Patient[] = [];
 
+  // 🔴 patient sélectionné pour suppression
+  pendingDeleteId: string | null = null;
+
   constructor(private patientsService: Patients) {
     this.refresh();
   }
@@ -23,11 +26,19 @@ export class PatientsList {
     this.patients = this.patientsService.search(this.query);
   }
 
-  remove(id: string) {
-    const ok = confirm('Delete this patient?');
-    if (!ok) return;
+  askDelete(id: string) {
+    this.pendingDeleteId = id;
+  }
 
-    this.patientsService.delete(id);
+  cancelDelete() {
+    this.pendingDeleteId = null;
+  }
+
+  confirmDelete() {
+    if (!this.pendingDeleteId) return;
+
+    this.patientsService.delete(this.pendingDeleteId);
+    this.pendingDeleteId = null;
     this.refresh();
   }
 }
