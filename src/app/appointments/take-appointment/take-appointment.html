@@ -1,0 +1,89 @@
+<div class="page">
+  <div class="card">
+
+    <!-- ÉTAPE 1 : spécialité -->
+    <div *ngIf="step === 1">
+      <h2>Choisir une spécialité</h2>
+
+      <select [(ngModel)]="specialty">
+        <option value="" disabled>-- Sélectionner --</option>
+        <option *ngFor="let s of specialties" [value]="s">
+          {{ s }}
+        </option>
+      </select>
+
+      <button type="button" class="btn btn-add"
+              (click)="chooseSpecialty()" [disabled]="!specialty">
+        Continuer
+      </button>
+    </div>
+
+    <!-- ÉTAPE 2 : médecin -->
+    <div *ngIf="step === 2">
+      <h2>Choisir un médecin</h2>
+
+      <div class="empty" *ngIf="filteredDoctors.length === 0">
+        Aucun médecin disponible pour cette spécialité.
+      </div>
+
+      <div *ngFor="let d of filteredDoctors" class="doctor-card">
+        <div>
+          <p><strong>{{ d.fullName }}</strong></p>
+          <p class="small">@{{ d.username }} • {{ d.specialty }}</p>
+        </div>
+
+        <button type="button" class="btn btn-ghost"
+                (click)="chooseDoctor(d.username)">
+          Choisir
+        </button>
+      </div>
+
+      <!-- ✅ Retour en dehors du ngFor -->
+      <button type="button" class="btn btn-ghost" (click)="step = 1">
+        ← Retour
+      </button>
+    </div>
+
+    <!-- ÉTAPE 3 : date / heure -->
+    <div *ngIf="step === 3">
+      <p style="color:white">DEBUG step={{ step }} doctor={{ doctorUsername }}</p>
+
+      <h2>Date du rendez-vous</h2>
+
+      <label class="lbl">Choisir une date</label>
+      <input type="date" [(ngModel)]="date" (ngModelChange)="onDateChange()" />
+
+      <div *ngIf="date">
+        <label class="lbl">Heures disponibles</label>
+
+        <div *ngIf="availableTimes.length === 0" class="empty">
+          Aucun créneau disponible ce jour.
+        </div>
+
+        <div class="times" *ngIf="availableTimes.length > 0">
+          <button
+            type="button"
+            class="time-btn"
+            *ngFor="let t of availableTimes"
+            [class.active]="time === t"
+            (click)="time = t"
+          >
+            {{ t }}
+          </button>
+        </div>
+      </div>
+
+      <button type="button" class="btn btn-add"
+              (click)="submit()" [disabled]="!date || !time">
+        Confirmer le rendez-vous
+      </button>
+
+      <button type="button" class="btn btn-ghost" (click)="step = 2">
+        ← Retour
+      </button>
+
+      <div class="message" *ngIf="message">{{ message }}</div>
+    </div>
+
+  </div>
+</div>

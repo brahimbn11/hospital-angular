@@ -1,0 +1,18 @@
+<div class="page">
+  <div class="card">
+    <h2>Choisir votre spécialité</h2>
+    <p class="subtitle">Cette information permet aux patients de vous trouver.</p>
+
+    <div class="field">
+      <label>Spécialité</label>
+      <select [(ngModel)]="selected">
+        <option value="" disabled>Choisir</option>
+        <option *ngFor="let s of specialties" [value]="s">{{ s }}</option>
+      </select>
+    </div>
+
+    <button class="btn btn-add" (click)="save()">Enregistrer</button>
+
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </div>
+</div>

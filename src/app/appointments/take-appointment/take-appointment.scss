@@ -1,0 +1,98 @@
+.page{
+  min-height: calc(100vh - 70px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding: 24px 16px;
+}
+
+.card{
+  width: 100%;
+  max-width: 640px;
+  padding: 26px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.12);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,.18);
+}
+.small{ opacity:.85; font-size:12px; margin: 4px 0 0; }
+
+
+.doctor-card{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.08);
+}
+
+.doctor-info{
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+}
+
+.doctor-name{
+  font-weight: 900;
+  margin:0;
+}
+
+.doctor-meta{
+  margin:0;
+  font-size: 12px;
+  opacity: .85;
+}
+
+.empty{
+  margin: 12px 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.18);
+  border: 1px solid rgba(255,255,255,.12);
+  font-weight: 800;
+}
+.lbl{
+  display:block;
+  margin-top: 10px;
+  font-weight: 900;
+  opacity: .95;
+}
+
+.times{
+  display:flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+.time-btn{
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.22);
+  background: rgba(255,255,255,.10);
+  color:white;
+  font-weight: 900;
+  cursor:pointer;
+}
+
+.time-btn.active{
+  background: rgba(37,99,235,.9);
+  border-color: rgba(255,255,255,.35);
+}
+
+.message{
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(0,0,0,.22);
+  border: 1px solid rgba(255,255,255,.15);
+  font-weight: 800;
+}
+
+input, select {
+  border: 1px solid rgba(255,255,255,.3);
+}

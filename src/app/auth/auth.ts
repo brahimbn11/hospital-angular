@@ -1,24 +1,43 @@
 import { Injectable } from '@angular/core';
 
+export type UserRole = 'doctor' | 'patient';
+
+export type Specialty =
+  | 'Médecine générale'
+  | 'Cardiologie'
+  | 'Chirurgie'
+  | 'Ophtalmologie'
+  | 'ORL'
+  | 'Dentaire'
+  | '';
+
 export interface ClientUser {
+  role: UserRole;
+  specialty: Specialty;
+
   fullName: string;
   email: string;
   phone: string;
+
   gender: 'male' | 'female' | 'other' | '';
   street: string;
   city: string;
   country: string;
+
   username: string;
   password: string;
 }
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root' })
 export class Auth {
   private usersKey = 'users';
   private tokenKey = 'token';
   private currentKey = 'currentUser';
+
+getDoctorsBySpecialty(specialty: Specialty) {
+  return this.getUsers().filter(u => u.role === 'doctor' && u.specialty === specialty);
+}
+
 
   private getUsers(): ClientUser[] {
     return JSON.parse(localStorage.getItem(this.usersKey) || '[]');
@@ -73,5 +92,30 @@ export class Auth {
 
   getCurrentUser(): ClientUser | null {
     return JSON.parse(localStorage.getItem(this.currentKey) || 'null');
+  }
+
+  // ✅ Role
+  getRole(): UserRole | null {
+    const u = this.getCurrentUser();
+    return u ? u.role : null;
+  }
+
+  // ✅ Update user (ex: specialty)
+  updateCurrentUser(patch: Partial<ClientUser>) {
+    const current = this.getCurrentUser();
+    if (!current) return;
+
+    const updated = { ...current, ...patch };
+
+    // update currentUser
+    localStorage.setItem(this.currentKey, JSON.stringify(updated));
+
+    // update in users array
+    const users = this.getUsers();
+    const idx = users.findIndex(u => u.username === current.username);
+    if (idx >= 0) {
+      users[idx] = updated;
+      this.saveUsers(users);
+    }
   }
 }

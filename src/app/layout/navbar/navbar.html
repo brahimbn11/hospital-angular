@@ -19,13 +19,14 @@
         </nav>
       </ng-container>
 
-      <!-- Logged in -->
       <ng-template #loggedIn>
-        <nav class="links">
-          <a routerLink="/patients" routerLinkActive="active">Patients</a>
-          <button class="logout" (click)="logout()">Logout</button>
-        </nav>
-      </ng-template>
+  <nav class="links">
+    <a *ngIf="role === 'patient'" routerLink="/dashboard/patient" routerLinkActive="active">Tableau patient</a>
+    <a *ngIf="role === 'doctor'" routerLink="/dashboard/doctor" routerLinkActive="active">Tableau médecin</a>
+    <button class="logout" (click)="logout()">Logout</button>
+  </nav>
+</ng-template>
+
     </ng-container>
   </div>
 </header>

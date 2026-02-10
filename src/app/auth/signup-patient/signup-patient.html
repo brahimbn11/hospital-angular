@@ -1,0 +1,71 @@
+<div class="page">
+  <form class="form" (ngSubmit)="submit()" #f="ngForm" novalidate>
+    <h2>Inscription Patient</h2>
+    <p class="subtitle">Veuillez renseigner vos informations personnelles.</p>
+
+    <div class="grid">
+      <div class="field">
+        <label>Nom complet</label>
+        <input name="fullName" [(ngModel)]="user.fullName" required minlength="3" />
+      </div>
+
+      <div class="field">
+        <label>Sexe</label>
+        <select name="gender" [(ngModel)]="user.gender" required>
+          <option value="" disabled>Choisir</option>
+          <option value="male">Homme</option>
+          <option value="female">Femme</option>
+          <option value="other">Autre</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input type="email" name="email" [(ngModel)]="user.email" required />
+      </div>
+
+      <div class="field">
+        <label>Téléphone</label>
+        <input
+          name="phone"
+          [(ngModel)]="user.phone"
+          required
+          pattern="^[0-9]+$"
+          placeholder="Chiffres uniquement"
+        />
+      </div>
+
+      <div class="field">
+        <label>Adresse</label>
+        <input name="street" [(ngModel)]="user.street" required />
+      </div>
+
+      <div class="field">
+        <label>Ville</label>
+        <input name="city" [(ngModel)]="user.city" required />
+      </div>
+
+      <div class="field">
+        <label>Pays</label>
+        <input name="country" [(ngModel)]="user.country" required />
+      </div>
+
+      <div class="field">
+        <label>Nom d’utilisateur</label>
+        <input name="username" [(ngModel)]="user.username" required />
+      </div>
+
+      <div class="field" style="grid-column: 1 / -1;">
+        <label>Mot de passe</label>
+        <input type="password" name="password" [(ngModel)]="user.password" required minlength="4" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-add" type="submit" [disabled]="f.invalid">Créer mon compte</button>
+      <a class="btn btn-ghost" routerLink="/signup">Retour</a>
+    </div>
+
+    <p class="message" *ngIf="message">{{ message }}</p>
+  </form>
+</div>

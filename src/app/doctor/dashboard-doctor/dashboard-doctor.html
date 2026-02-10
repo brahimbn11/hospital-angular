@@ -1,0 +1,12 @@
+<h2>Rendez-vous reçus</h2>
+
+<div *ngIf="appointments.length === 0">
+  Aucun rendez-vous.
+</div>
+
+<div *ngFor="let a of appointments">
+  <p>Patient: {{ a.patientUsername }} — {{ a.date }} {{ a.time }} — {{ a.status }}</p>
+
+  <button *ngIf="a.status === 'pending'" (click)="accept(a.id)">Accepter</button>
+  <button *ngIf="a.status === 'pending'" (click)="reject(a.id)">Refuser</button>
+</div>

@@ -37,5 +37,11 @@ export class Navbar {
     this.router.navigate(['/']);
   }
 }
+role: 'doctor' | 'patient' | null = null;
+
+ngOnInit() {
+  this.role = this.auth.getRole();
+}
+
 
 }

@@ -1,0 +1,24 @@
+<h2>Mes rendez-vous</h2>
+
+<a routerLink="/appointments/new" class="btn btn-add">Prendre un rendez-vous</a>
+
+<div *ngIf="appointments.length === 0">
+  Aucun rendez-vous.
+</div>
+
+<div *ngFor="let a of appointments">
+  <p>Médecin: {{ a.doctorUsername }} — {{ a.date }} {{ a.time }} — {{ a.status }}</p>
+</div>
+<div *ngFor="let a of appointments" class="card">
+  <p><strong>Médecin :</strong> {{ a.doctorUsername }}</p>
+  <p><strong>Date :</strong> {{ a.date }} à {{ a.time }}</p>
+
+  <!-- ✅ BADGE ICI -->
+  <span
+    class="badge"
+    [class.ok]="a.status === 'accepted'"
+    [class.no]="a.status === 'rejected'"
+  >
+    {{ a.status }}
+  </span>
+</div>

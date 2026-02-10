@@ -1,0 +1,30 @@
+.page{
+  min-height: calc(100vh - 70px);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  padding: 20px;
+}
+.card{
+  width:100%;
+  max-width: 520px;
+  padding: 26px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.12);
+  border: 1px solid rgba(255,255,255,.18);
+  backdrop-filter: blur(10px);
+  color:white;
+}
+.subtitle{ opacity:.9; margin: 8px 0 16px; }
+.field label{ display:block; font-weight:900; margin-bottom: 6px; }
+.field select{
+  width:100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,.25);
+  background: rgba(255,255,255,.10);
+  color:white;
+}
+.btn{ margin-top: 16px; padding: 12px 14px; border-radius: 12px; font-weight: 900; cursor:pointer; }
+.btn-add{ border: 1px solid rgba(255,255,255,.25); background: rgba(37,99,235,.9); color:white; }
+.message{ margin-top: 12px; font-weight: 800; }
