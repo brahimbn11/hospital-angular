@@ -1,0 +1,76 @@
+<div class="page">
+  <div class="card card--wide">
+    <h2>Médecins</h2>
+    <p class="subtitle">Liste des médecins + état du compte + rendez-vous.</p>
+
+    <table class="table" *ngIf="doctors.length > 0; else empty">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Username</th>
+          <th>Spécialité</th>
+          <th>État</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let d of doctors" (click)="selectDoctor(d)" class="clickable">
+          <td>{{ d.fullName }}</td>
+          <td>@{{ d.username }}</td>
+          <td>{{ d.specialty || '-' }}</td>
+          <td>
+            <span class="pill" [class.bad]="d.blocked" [class.good]="!d.blocked">
+              {{ d.blocked ? 'Bloqué' : 'Actif' }}
+            </span>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger" *ngIf="!d.blocked" (click)="$event.stopPropagation(); toggleBlocked(d)">
+              Bloquer
+            </button>
+            <button type="button" class="btn btn-ghost" *ngIf="d.blocked" (click)="$event.stopPropagation(); toggleBlocked(d)">
+              Débloquer
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <ng-template #empty>
+      <div class="empty">Aucun médecin trouvé.</div>
+    </ng-template>
+
+    <div class="divider"></div>
+
+    <div *ngIf="selectedDoctor; else selectHint">
+      <h3>Rendez-vous – {{ selectedDoctor.fullName }} (@{{ selectedDoctor.username }})</h3>
+
+      <div class="empty" *ngIf="doctorAppointments.length === 0">
+        Aucun rendez-vous pour ce médecin.
+      </div>
+
+      <table class="table" *ngIf="doctorAppointments.length > 0">
+        <thead>
+          <tr>
+            <th>Patient</th>
+            <th>Date</th>
+            <th>Heure</th>
+            <th>Statut</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of doctorAppointments">
+            <td>@{{ a.patientUsername }}</td>
+            <td>{{ a.date }}</td>
+            <td>{{ a.time }}</td>
+            <td>{{ a.status }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #selectHint>
+      <div class="empty">Clique sur un médecin pour voir ses rendez-vous.</div>
+    </ng-template>
+  </div>
+</div>

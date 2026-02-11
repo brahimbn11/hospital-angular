@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { Auth, ClientUser } from '../auth';
 
-
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -14,23 +13,20 @@ import { Auth, ClientUser } from '../auth';
 })
 export class Signup {
   user: ClientUser = {
-  role: 'patient',
-  specialty: '',
+    role: 'patient',
+    blocked: false,
 
-  fullName: '',
-  email: '',
-  phone: '',
-  gender: '',
-  street: '',
-  city: '',
-  country: '',
-  username: '',
-  password: '',
-};
-
-
-
-
+    fullName: '',
+    email: '',
+    phone: '',
+    gender: '',
+    street: '',
+    city: '',
+    country: '',
+    username: '',
+    password: '',
+    specialty: '',
+  };
 
   message = '';
 

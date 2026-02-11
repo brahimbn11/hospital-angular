@@ -1,13 +1,15 @@
 <div class="page">
-  <form class="form" (ngSubmit)="submit()" #f="ngForm">
+  <div class="card">
+  <form class="form" (ngSubmit)="submit()" #f="ngForm" novalidate>
     <h2>Inscription Médecin</h2>
-
-    <div class="field">
-      <label>Nom complet</label>
-      <input name="fullName" [(ngModel)]="user.fullName" required />
-    </div>
+    <p class="subtitle">Créez votre compte professionnel.</p>
 
     <div class="grid">
+      <div class="field" style="grid-column: 1 / -1;">
+        <label>Nom complet</label>
+        <input name="fullName" [(ngModel)]="user.fullName" required minlength="3" />
+      </div>
+
       <div class="field">
         <label>Email</label>
         <input type="email" name="email" [(ngModel)]="user.email" required />
@@ -15,25 +17,34 @@
 
       <div class="field">
         <label>Téléphone</label>
-        <input name="phone" [(ngModel)]="user.phone" required pattern="^[0-9]+$" />
+        <input name="phone" [(ngModel)]="user.phone" required pattern="^[0-9]+$" placeholder="Chiffres uniquement" />
       </div>
-    </div>
 
-    <div class="grid">
+      <div class="field" style="grid-column: 1 / -1;">
+        <label>Spécialité</label>
+        <select name="specialty" [(ngModel)]="user.specialty" required>
+          <option value="" disabled>-- Sélectionner --</option>
+          <option *ngFor="let s of specialties" [value]="s">{{ s }}</option>
+        </select>
+      </div>
+
       <div class="field">
-        <label>Username</label>
+        <label>Nom d'utilisateur</label>
         <input name="username" [(ngModel)]="user.username" required />
       </div>
 
       <div class="field">
         <label>Mot de passe</label>
-        <input type="password" name="password" [(ngModel)]="user.password" required />
+        <input type="password" name="password" [(ngModel)]="user.password" required minlength="4" />
       </div>
     </div>
 
-    <button class="btn btn-add" [disabled]="f.invalid">Créer le compte</button>
+    <div class="actions">
+      <button class="btn btn-add" type="submit" [disabled]="f.invalid">Créer le compte</button>
+      <a class="btn btn-ghost" routerLink="/signup">Retour</a>
+    </div>
 
     <p class="message" *ngIf="message">{{ message }}</p>
-    <p class="hint"><a routerLink="/signup">← Retour</a></p>
   </form>
+  </div>
 </div>

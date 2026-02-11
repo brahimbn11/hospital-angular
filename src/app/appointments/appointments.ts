@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type AppointmentStatus = 'pending' | 'accepted' | 'rejected';
+export type AppointmentStatus = 'pending' | 'accepted' | 'rejected' | 'cancelled';
 
 export interface Appointment {
   id: string;
@@ -10,6 +10,7 @@ export interface Appointment {
   date: string;        // YYYY-MM-DD
   time: string;        // HH:mm
   status: AppointmentStatus;
+  doctorNote?: string; // ✅ motif si refus (ou note)
   createdAt: number;
 }
 
@@ -37,28 +38,53 @@ export class AppointmentService {
     return this.load().filter(a => a.patientUsername === username);
   }
 
-  add(app: Omit<Appointment, 'id' | 'createdAt' | 'status'>) {
+  add(app: Omit<Appointment, 'id' | 'createdAt' | 'status' | 'doctorNote'>) {
     const list = this.load();
 
     list.push({
       id: crypto.randomUUID(),
       createdAt: Date.now(),
       status: 'pending',
+      doctorNote: '',
       ...app,
     });
 
     this.save(list);
   }
 
-  updateStatus(id: string, status: AppointmentStatus) {
+  /** ✅ médecin accepte/refuse (+ motif optionnel) */
+  updateStatus(id: string, status: AppointmentStatus, doctorNote?: string) {
     const list = this.load();
     const idx = list.findIndex(a => a.id === id);
-    if (idx >= 0) {
-      list[idx].status = status;
-      this.save(list);
+    if (idx < 0) return;
+
+    list[idx].status = status;
+
+    // On garde le motif uniquement si refus (ou si tu veux noter quelque chose)
+    if (typeof doctorNote === 'string') {
+      list[idx].doctorNote = doctorNote.trim();
     }
+
+    this.save(list);
   }
-    // --- Disponibilité (créneaux) ---
+
+  /** ✅ patient annule seulement si pending */
+  cancelByPatient(id: string, patientUsername: string): boolean {
+    const list = this.load();
+    const idx = list.findIndex(a => a.id === id);
+    if (idx < 0) return false;
+
+    const a = list[idx];
+
+    if (a.patientUsername !== patientUsername) return false;
+    if (a.status !== 'pending') return false;
+
+    list[idx].status = 'cancelled';
+    this.save(list);
+    return true;
+  }
+
+  // --- Disponibilité (créneaux) ---
   private defaultSlots(): string[] {
     // créneaux toutes les 30 minutes : 09:00 → 16:30
     const slots: string[] = [];
@@ -72,10 +98,10 @@ export class AppointmentService {
     return slots;
   }
 
+  /** Créneaux pris = pending ou accepted (rejected/cancelled ne bloquent pas) */
   getTakenTimes(doctorUsername: string, date: string): string[] {
     return this.load()
       .filter(a => a.doctorUsername === doctorUsername && a.date === date)
-      // on bloque aussi si pending (car créneau “réservé” en attente)
       .filter(a => a.status === 'pending' || a.status === 'accepted')
       .map(a => a.time);
   }
@@ -88,5 +114,4 @@ export class AppointmentService {
   isSlotAvailable(doctorUsername: string, date: string, time: string): boolean {
     return this.getAvailableTimes(doctorUsername, date).includes(time);
   }
-
 }

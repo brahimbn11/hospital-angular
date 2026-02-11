@@ -1,0 +1,44 @@
+<div class="page">
+  <div class="card">
+    <h2>Profil administrateur</h2>
+    <p class="subtitle">Mettre à jour vos informations.</p>
+
+    <div class="grid">
+      <div class="field">
+        <label>Nom complet</label>
+        <input [(ngModel)]="model.fullName" />
+      </div>
+
+      <div class="field">
+        <label>Email</label>
+        <input [(ngModel)]="model.email" />
+      </div>
+
+      <div class="field">
+        <label>Téléphone</label>
+        <input [(ngModel)]="model.phone" />
+      </div>
+
+      <div class="field">
+        <label>Adresse</label>
+        <input [(ngModel)]="model.street" />
+      </div>
+
+      <div class="field">
+        <label>Ville</label>
+        <input [(ngModel)]="model.city" />
+      </div>
+
+      <div class="field">
+        <label>Pays</label>
+        <input [(ngModel)]="model.country" />
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-add" (click)="save()">Enregistrer</button>
+    </div>
+
+    <div class="message" *ngIf="message">{{ message }}</div>
+  </div>
+</div>

@@ -1,12 +1,84 @@
-<h2>Rendez-vous reçus</h2>
+<div class="page">
+  <div class="card card--wide">
 
-<div *ngIf="appointments.length === 0">
-  Aucun rendez-vous.
-</div>
+    <div class="header">
+      <div>
+        <h2>Calendrier des rendez-vous</h2>
+        <p class="subtitle">Acceptez ou refusez les demandes avec un motif.</p>
+      </div>
+    </div>
 
-<div *ngFor="let a of appointments">
-  <p>Patient: {{ a.patientUsername }} — {{ a.date }} {{ a.time }} — {{ a.status }}</p>
+    <div class="message" *ngIf="message">{{ message }}</div>
 
-  <button *ngIf="a.status === 'pending'" (click)="accept(a.id)">Accepter</button>
-  <button *ngIf="a.status === 'pending'" (click)="reject(a.id)">Refuser</button>
+    <div class="empty" *ngIf="days.length === 0">
+      Aucun rendez-vous pour le moment.
+    </div>
+
+    <div class="calendar" *ngIf="days.length > 0">
+      <div class="day" *ngFor="let d of days">
+        <div class="day__head">{{ d.date }}</div>
+
+        <div class="slot" *ngFor="let a of d.items">
+          <div class="slot__left">
+            <div class="time">{{ a.time }}</div>
+            <div class="info">
+              <div class="title">Patient : {{ a.patientUsername }}</div>
+              <div class="meta">{{ a.specialty }}</div>
+
+              <div class="note" *ngIf="a.status === 'rejected' && a.doctorNote">
+                Motif : {{ a.doctorNote }}
+              </div>
+
+              <div class="note" *ngIf="a.status === 'cancelled'">
+                Annulé par le patient.
+              </div>
+            </div>
+          </div>
+
+          <div class="slot__right">
+            <span class="badge"
+              [class.ok]="a.status === 'accepted'"
+              [class.no]="a.status === 'rejected'"
+              [class.wait]="a.status === 'pending'"
+              [class.cancel]="a.status === 'cancelled'"
+            >
+              {{ a.status }}
+            </span>
+
+            <!-- Actions seulement si pending -->
+            <div class="actions" *ngIf="a.status === 'pending'">
+
+              <button type="button" class="btn btn-add" (click)="accept(a.id)">
+                Accepter
+              </button>
+
+              <!-- bouton ouvrir motif -->
+              <button
+                type="button"
+                class="btn btn-danger"
+                *ngIf="rejectingId !== a.id"
+                (click)="startReject(a.id)"
+              >
+                Refuser
+              </button>
+
+              <!-- motif inline -->
+              <div class="rejectBox" *ngIf="rejectingId === a.id">
+                <label>Motif de refus</label>
+                <textarea [(ngModel)]="rejectReason" rows="2" placeholder="Ex: indisponible, urgence, etc."></textarea>
+
+                <div class="rejectBtns">
+                  <button type="button" class="btn btn-danger" (click)="confirmReject(a.id)">Confirmer</button>
+                  <button type="button" class="btn btn-ghost" (click)="cancelReject()">Annuler</button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </div>

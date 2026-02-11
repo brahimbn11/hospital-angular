@@ -14,17 +14,15 @@ import { Auth, ClientUser } from '../auth';
 export class SignupPatient {
   user: ClientUser = {
     role: 'patient',
-    specialty: '',
+    blocked: false,
 
     fullName: '',
     email: '',
     phone: '',
-
     gender: '',
     street: '',
     city: '',
     country: '',
-
     username: '',
     password: '',
   };
@@ -36,6 +34,7 @@ export class SignupPatient {
   submit() {
     const res = this.auth.signup(this.user);
     this.message = res.message;
+
     if (res.ok) this.router.navigate(['/login']);
   }
 }

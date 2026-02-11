@@ -15,10 +15,45 @@ import { AppointmentService, Appointment } from '../../appointments/appointments
 export class DashboardPatient {
   appointments: Appointment[] = [];
 
-  constructor(private auth: Auth, private appointmentService: AppointmentService) {
+  // confirmation dans la page
+  pendingCancelId: string | null = null;
+
+  message = '';
+
+  constructor(private auth: Auth, private service: AppointmentService) {
+    this.refresh();
+  }
+
+  refresh() {
     const user = this.auth.getCurrentUser();
-    if (user) {
-      this.appointments = this.appointmentService.getByPatient(user.username);
-    }
+    if (!user) return;
+
+    this.appointments = this.service
+      .getByPatient(user.username)
+      .slice()
+      .sort((a, b) => (b.date + b.time).localeCompare(a.date + a.time));
+  }
+
+  askCancel(id: string) {
+    this.pendingCancelId = id;
+    this.message = '';
+  }
+
+  cancelNo() {
+    this.pendingCancelId = null;
+  }
+
+  cancelYes() {
+    const user = this.auth.getCurrentUser();
+    if (!user || !this.pendingCancelId) return;
+
+    const ok = this.service.cancelByPatient(this.pendingCancelId, user.username);
+
+    this.message = ok
+      ? 'Rendez-vous annulé.'
+      : 'Annulation impossible (seulement si le rendez-vous est en attente).';
+
+    this.pendingCancelId = null;
+    this.refresh();
   }
 }

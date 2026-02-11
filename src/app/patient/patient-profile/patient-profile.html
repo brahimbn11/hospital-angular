@@ -1,0 +1,55 @@
+<div class="page">
+  <div class="card card--wide">
+    <h2>Mon profil (Patient)</h2>
+    <p class="subtitle">Consultez et mettez à jour vos informations.</p>
+
+    <form (ngSubmit)="save()" #f="ngForm" novalidate>
+      <div class="grid">
+        <div class="field">
+          <label>Nom complet</label>
+          <input name="fullName" [(ngModel)]="model.fullName" required minlength="3" />
+        </div>
+
+        <div class="field">
+          <label>Email</label>
+          <input type="email" name="email" [(ngModel)]="model.email" required />
+        </div>
+
+        <div class="field">
+          <label>Téléphone</label>
+          <input name="phone" [(ngModel)]="model.phone" required pattern="^[0-9]+$" />
+        </div>
+
+        <div class="field">
+          <label>Sexe</label>
+          <select name="gender" [(ngModel)]="model.gender" required>
+            <option value="" disabled>Choisir</option>
+            <option value="male">Homme</option>
+            <option value="female">Femme</option>
+          </select>
+        </div>
+
+        <div class="field" style="grid-column: 1 / -1;">
+          <label>Adresse (Rue)</label>
+          <input name="street" [(ngModel)]="model.street" required />
+        </div>
+
+        <div class="field">
+          <label>Ville</label>
+          <input name="city" [(ngModel)]="model.city" required />
+        </div>
+
+        <div class="field">
+          <label>Pays</label>
+          <input name="country" [(ngModel)]="model.country" required />
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-add" type="submit" [disabled]="f.invalid">Enregistrer</button>
+      </div>
+
+      <div class="message" *ngIf="message">{{ message }}</div>
+    </form>
+  </div>
+</div>

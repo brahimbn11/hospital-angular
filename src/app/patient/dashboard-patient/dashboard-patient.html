@@ -1,24 +1,73 @@
-<h2>Mes rendez-vous</h2>
+<div class="page">
+  <div class="card card--wide">
 
-<a routerLink="/appointments/new" class="btn btn-add">Prendre un rendez-vous</a>
+    <div class="header">
+      <div>
+        <h2>Mes rendez-vous</h2>
+        <p class="subtitle">Consultez vos rendez-vous et prenez-en un nouveau.</p>
+      </div>
 
-<div *ngIf="appointments.length === 0">
-  Aucun rendez-vous.
-</div>
+      <a routerLink="/appointments/new" class="btn btn-add">+ Nouveau rendez-vous</a>
+    </div>
 
-<div *ngFor="let a of appointments">
-  <p>Médecin: {{ a.doctorUsername }} — {{ a.date }} {{ a.time }} — {{ a.status }}</p>
-</div>
-<div *ngFor="let a of appointments" class="card">
-  <p><strong>Médecin :</strong> {{ a.doctorUsername }}</p>
-  <p><strong>Date :</strong> {{ a.date }} à {{ a.time }}</p>
+    <div class="message" *ngIf="message">{{ message }}</div>
 
-  <!-- ✅ BADGE ICI -->
-  <span
-    class="badge"
-    [class.ok]="a.status === 'accepted'"
-    [class.no]="a.status === 'rejected'"
-  >
-    {{ a.status }}
-  </span>
+    <div class="empty" *ngIf="appointments.length === 0">
+      Aucun rendez-vous pour le moment.
+      <div class="hint">Cliquez sur <strong>“Nouveau rendez-vous”</strong> pour réserver.</div>
+    </div>
+
+    <div class="list" *ngIf="appointments.length > 0">
+      <div class="appt" *ngFor="let a of appointments">
+
+        <div class="appt__main">
+          <div class="appt__title">
+            Dr. {{ a.doctorUsername }} • {{ a.specialty }}
+          </div>
+          <div class="appt__meta">
+            {{ a.date }} à {{ a.time }}
+          </div>
+
+          <div class="note" *ngIf="a.status === 'rejected' && a.doctorNote">
+            Motif : {{ a.doctorNote }}
+          </div>
+        </div>
+
+        <div class="appt__right">
+          <span class="badge"
+            [class.ok]="a.status === 'accepted'"
+            [class.no]="a.status === 'rejected'"
+            [class.wait]="a.status === 'pending'"
+            [class.cancel]="a.status === 'cancelled'"
+          >
+            {{ a.status }}
+          </span>
+
+          <!-- ✅ Annuler seulement si pending -->
+          <div class="cancelArea" *ngIf="a.status === 'pending'">
+
+            <!-- bouton annuler -->
+            <button
+              type="button"
+              class="btn btn-danger"
+              *ngIf="pendingCancelId !== a.id"
+              (click)="askCancel(a.id)"
+            >
+              Annuler
+            </button>
+
+            <!-- confirmation inline -->
+            <div class="confirm" *ngIf="pendingCancelId === a.id">
+              <span>Annuler ce rendez-vous ?</span>
+              <button type="button" class="btn btn-danger" (click)="cancelYes()">Oui</button>
+              <button type="button" class="btn btn-ghost" (click)="cancelNo()">Non</button>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
 </div>

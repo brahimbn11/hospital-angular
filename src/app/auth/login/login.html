@@ -1,32 +1,42 @@
 <div class="page">
-  <form class="card" (ngSubmit)="submit()" #f="ngForm">
-    <h2>Login</h2>
+  <div class="card">
 
-    <div class="field">
-      <input
-        name="username"
-        [(ngModel)]="username"
-        placeholder="Username"
-        required
-      />
-    </div>
+    <h2>Connexion</h2>
+    <p class="subtitle">Accédez à votre espace personnel sécurisé</p>
 
-    <div class="field">
-      <input
-        type="password"
-        name="password"
-        [(ngModel)]="password"
-        placeholder="Password"
-        required
-      />
-    </div>
+    <form (ngSubmit)="submit()" #f="ngForm">
 
-    <div class="actions">
-      <button class="btn" type="submit" [disabled]="f.invalid">
+      <div class="field">
+        <label>Nom d’utilisateur</label>
+        <input
+          name="username"
+          [(ngModel)]="username"
+          required
+        />
+      </div>
+
+      <div class="field">
+        <label>Mot de passe</label>
+        <input
+          type="password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+
+      <button class="btn btn-add" [disabled]="f.invalid">
         Se connecter
       </button>
-    </div>
 
-    <p class="message" *ngIf="message">{{ message }}</p>
-  </form>
+      <p class="link-text">
+        Pas encore de compte ?
+        <a routerLink="/signup">Créer un compte</a>
+      </p>
+
+      <div class="message" *ngIf="message">{{ message }}</div>
+
+    </form>
+
+  </div>
 </div>

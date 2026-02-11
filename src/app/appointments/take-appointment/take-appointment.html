@@ -1,19 +1,15 @@
 <div class="page">
   <div class="card">
-
     <!-- ÉTAPE 1 : spécialité -->
     <div *ngIf="step === 1">
       <h2>Choisir une spécialité</h2>
 
       <select [(ngModel)]="specialty">
         <option value="" disabled>-- Sélectionner --</option>
-        <option *ngFor="let s of specialties" [value]="s">
-          {{ s }}
-        </option>
+        <option *ngFor="let s of specialties" [value]="s">{{ s }}</option>
       </select>
 
-      <button type="button" class="btn btn-add"
-              (click)="chooseSpecialty()" [disabled]="!specialty">
+      <button class="btn btn-add" type="button" (click)="chooseSpecialty()" [disabled]="!specialty">
         Continuer
       </button>
     </div>
@@ -27,27 +23,21 @@
       </div>
 
       <div *ngFor="let d of filteredDoctors" class="doctor-card">
-        <div>
-          <p><strong>{{ d.fullName }}</strong></p>
-          <p class="small">@{{ d.username }} • {{ d.specialty }}</p>
+        <div class="doctor-info">
+          <p class="doctor-name">{{ d.fullName }}</p>
+          <p class="doctor-meta">@{{ d.username }} • {{ d.specialty }}</p>
         </div>
 
-        <button type="button" class="btn btn-ghost"
-                (click)="chooseDoctor(d.username)">
+        <button type="button" class="btn btn-ghost" (click)="chooseDoctor(d.username)">
           Choisir
         </button>
       </div>
 
-      <!-- ✅ Retour en dehors du ngFor -->
-      <button type="button" class="btn btn-ghost" (click)="step = 1">
-        ← Retour
-      </button>
+      <button type="button" class="btn btn-ghost" (click)="step = 1">← Retour</button>
     </div>
 
     <!-- ÉTAPE 3 : date / heure -->
     <div *ngIf="step === 3">
-      <p style="color:white">DEBUG step={{ step }} doctor={{ doctorUsername }}</p>
-
       <h2>Date du rendez-vous</h2>
 
       <label class="lbl">Choisir une date</label>
@@ -73,17 +63,13 @@
         </div>
       </div>
 
-      <button type="button" class="btn btn-add"
-              (click)="submit()" [disabled]="!date || !time">
+      <button type="button" class="btn btn-add" (click)="submit()" [disabled]="!date || !time">
         Confirmer le rendez-vous
       </button>
 
-      <button type="button" class="btn btn-ghost" (click)="step = 2">
-        ← Retour
-      </button>
+      <button type="button" class="btn btn-ghost" (click)="step = 2">← Retour</button>
 
       <div class="message" *ngIf="message">{{ message }}</div>
     </div>
-
   </div>
 </div>

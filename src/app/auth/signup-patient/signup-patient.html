@@ -1,4 +1,5 @@
 <div class="page">
+   <div class="card">
   <form class="form" (ngSubmit)="submit()" #f="ngForm" novalidate>
     <h2>Inscription Patient</h2>
     <p class="subtitle">Veuillez renseigner vos informations personnelles.</p>
@@ -15,7 +16,7 @@
           <option value="" disabled>Choisir</option>
           <option value="male">Homme</option>
           <option value="female">Femme</option>
-          <option value="other">Autre</option>
+          
         </select>
       </div>
 
@@ -68,4 +69,5 @@
 
     <p class="message" *ngIf="message">{{ message }}</p>
   </form>
+  </div>
 </div>

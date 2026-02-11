@@ -1,0 +1,26 @@
+<div class="page">
+  <div class="card card--wide">
+    <h2>Administration</h2>
+    <p class="subtitle">Gestion des comptes (médecins/patients) et supervision des rendez-vous.</p>
+
+    <div class="grid">
+      <div class="card mini">
+        <h3>Médecins</h3>
+        <p class="big">{{ doctorsCount }}</p>
+        <a class="btn btn-add" routerLink="/admin/doctors">Voir la liste</a>
+      </div>
+
+      <div class="card mini">
+        <h3>Patients</h3>
+        <p class="big">{{ patientsCount }}</p>
+        <a class="btn btn-add" routerLink="/admin/patients">Voir la liste</a>
+      </div>
+
+      <div class="card mini">
+        <h3>Rendez-vous</h3>
+        <p class="big">{{ appointmentsCount }}</p>
+        <p class="subtitle">Total enregistré</p>
+      </div>
+    </div>
+  </div>
+</div>

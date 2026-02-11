@@ -1,17 +1,13 @@
 <header class="topbar">
   <div class="topbar__inner">
-    <!-- Left: brand always -->
-    <a class="brand" (click)="goHome()">🏥 HOSPITAL</a>
+    <a class="brand" (click)="goHome()" title="Accueil / Dashboard">🏥 HomeDoc</a>
 
-
-    <!-- Center: only on home -->
     <div class="centerText" *ngIf="isHome">
-      Plateforme sécurisée de gestion des établissements de santé
+      Excellence des soins • Confidentialité • Disponibilité
     </div>
 
-    <!-- Right: ONLY if NOT home -->
     <ng-container *ngIf="!isHome">
-      <!-- Logged out -->
+      <!-- NOT logged -->
       <ng-container *ngIf="!auth.isLoggedIn(); else loggedIn">
         <nav class="links">
           <a routerLink="/login" routerLinkActive="active">Se connecter</a>
@@ -19,14 +15,30 @@
         </nav>
       </ng-container>
 
+      <!-- logged -->
       <ng-template #loggedIn>
-  <nav class="links">
-    <a *ngIf="role === 'patient'" routerLink="/dashboard/patient" routerLinkActive="active">Tableau patient</a>
-    <a *ngIf="role === 'doctor'" routerLink="/dashboard/doctor" routerLinkActive="active">Tableau médecin</a>
-    <button class="logout" (click)="logout()">Logout</button>
-  </nav>
-</ng-template>
+        <nav class="links">
+          <ng-container *ngIf="role === 'admin'">
+            <a routerLink="/admin" routerLinkActive="active">Admin</a>
+            <a routerLink="/admin/doctors" routerLinkActive="active">Médecins</a>
+            <a routerLink="/admin/patients" routerLinkActive="active">Patients</a>
+            <a routerLink="/admin/profile" routerLinkActive="active">Profil</a>
+          </ng-container>
 
+          <ng-container *ngIf="role === 'doctor'">
+            <a routerLink="/dashboard/doctor" routerLinkActive="active">Tableau de bord</a>
+            <a routerLink="/profile/doctor" routerLinkActive="active">Profil</a>
+          </ng-container>
+
+          <ng-container *ngIf="role === 'patient'">
+            <a routerLink="/dashboard/patient" routerLinkActive="active">Tableau de bord</a>
+            <a routerLink="/appointments/new" routerLinkActive="active">Rendez-vous</a>
+            <a routerLink="/profile/patient" routerLinkActive="active">Profil</a>
+          </ng-container>
+
+          <button class="logout" (click)="logout()">Déconnexion</button>
+        </nav>
+      </ng-template>
     </ng-container>
   </div>
 </header>
